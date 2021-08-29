@@ -94,6 +94,8 @@ Tests
 
 De forma deseable y opcional, se podrán agregar tests de los diferentes endpoints de la APP,
 verificando posibles escenarios de error:
+
 ● Campos faltantes o con un formato inválido en BODY de las peticiones
 ● Acceso a recursos inexistentes en endpoints de detalle
+
 Los tests pueden realizarse utilizando RSpec y WebMock.

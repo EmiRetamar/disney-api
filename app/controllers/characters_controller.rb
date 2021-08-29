@@ -11,6 +11,11 @@ class CharactersController < ApplicationController
     end
   end
 
+  def show
+    @character = Character.find(params[:id])
+    json_response(@character, :ok)
+  end
+
   def create
     @character = Character.create!(character_params)
     json_response(@character, :created)

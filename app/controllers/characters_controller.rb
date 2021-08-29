@@ -1,5 +1,5 @@
 class CharactersController < ApplicationController
-  skip_before_action :verify_authenticity_token, :only => :create
+  skip_before_action :verify_authenticity_token
 
   # GET /projects
   def index
@@ -12,15 +12,23 @@ class CharactersController < ApplicationController
   end
 
   def create
-    # Rails asigna el campo :created_by automaticamente con el id del current_user
-    @character = Character.create!(project_params)
+    @character = Character.create!(character_params)
     json_response(@character, :created)
   end
 
-  def destroy
+  def update
+    @character = Character.find(params[:id])
+    @character.update!(character_params)
+    json_response(@character, :ok)
   end
 
-  def project_params
+  def destroy
+    @character = Character.find(params[:id])
+    @character.destroy!
+    json_response({"message" => "deleted"}, :ok)
+  end
+
+  def character_params
     params.permit(:name, :age, :weight, :history, :image)
   end
 end

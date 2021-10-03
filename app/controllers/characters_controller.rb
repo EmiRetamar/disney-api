@@ -20,7 +20,7 @@ class CharactersController < ApplicationController
 
   def create
     @character = Character.create!(character_params)
-    # @character.save_movies
+    @character.save_movies(params[:movies])
     json_response(@character, :created)
   end
 

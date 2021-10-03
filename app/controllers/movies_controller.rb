@@ -21,6 +21,7 @@ class MoviesController < ApplicationController
   def create
     set_gender
     @movie = @gender.movies.create!(movie_params)
+    @movie.save_characters(params[:characters])
     # @movie.save_characters
     json_response(@movie, :created)
   end

@@ -1,7 +1,7 @@
 class CharactersController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  # GET /projects
+  # GET /characters
   def index
     @characters = Character.all
 
@@ -13,11 +13,14 @@ class CharactersController < ApplicationController
 
   def show
     @character = Character.find(params[:id])
-    json_response(@character, :ok)
+    respond_to do |format|
+      format.json { @character } # Es necesario el http header "Accept: application/json"
+    end
   end
 
   def create
     @character = Character.create!(character_params)
+    # @character.save_movies
     json_response(@character, :created)
   end
 
@@ -34,6 +37,6 @@ class CharactersController < ApplicationController
   end
 
   def character_params
-    params.permit(:name, :age, :weight, :history, :image)
+    params.permit(:name, :age, :weight, :history, :image, :movies)
   end
 end

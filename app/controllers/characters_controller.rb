@@ -3,7 +3,20 @@ class CharactersController < ApplicationController
 
   # GET /characters
   def index
-    @characters = Character.all
+    query_params = request.query_parameters
+
+    if query_params.empty?
+      @characters = Character.all
+    else
+      @characters = Character.filter_characters_by_characteristics(query_params)
+    end
+
+    # characters_filtered_by_movie = []
+
+    if query_params[:movie_id]
+      characters_filtered_by_movie = Character.filter_characters_by_movie(@characters, query_params[:movie_id].to_i)
+      @characters = characters_filtered_by_movie
+    end
 
     respond_to do |format|
       format.html # Es necesario el http header "Accept: text/html"
@@ -35,6 +48,8 @@ class CharactersController < ApplicationController
     @character.destroy!
     json_response({"message" => "deleted"}, :ok)
   end
+
+  private
 
   def character_params
     params.permit(:name, :age, :weight, :history, :image, :movies)

@@ -35,6 +35,8 @@ class GendersController < ApplicationController
     json_response({"message" => "deleted"}, :ok)
   end
 
+  private
+
   def gender_params
     params.permit(:name, :image)
   end
